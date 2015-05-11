@@ -22,8 +22,6 @@
         <div class="alert alert-danger"><%= message %></div>
     <% } %>
 
-    <div class="row">
-
     <% for(var i=0; i < blogPosts.length; i++) { %>
         <div class="row">
             <div class="well">
@@ -32,7 +30,7 @@
                     <div>
                         <strong>Content</strong>: <%= blogPosts[i].content %><br><br>
                         <strong>Last Updated Date</strong>: <%= blogPosts[i].updated %><br><br>
-                    <div>
+                    </div>
                     <div class="form-group" style="padding-left: 100px;">
                         <label>Image</label>
                             <% if (blogPosts[i].image) { %>
@@ -49,17 +47,16 @@
                         </div>
                     </form>
                 </p>
+                <br><br>
+                <div>
+                    <label>Comments(<%= blogPosts[i].comments.length %>):</label><br>
+                    <% for(var j=0; j < blogPosts[i].comments.length; j++) { %>
+                        <strong><%= blogPosts[i].comments[j].creator %> commented on</strong>: <%= blogPosts[i].comments[j].created %><br>
+                        <strong><%= blogPosts[i].comments[j].body %></strong><hr><br>
+                    <% } %>
+                </div>
             </div>
-        </div>
-        <br><br>
-        <div style="background-color: #FFFFEB;">
-        <label>Comments(<%= blogPosts[i].comments.length %>):</label><br>
-        <% for(var j=0; j < blogPosts[i].comments.length; j++) { %>
-                <strong><%= blogPosts[i].comments[j].creator %> commented on</strong>: <%= blogPosts[i].comments[j].created %><br>
-                <strong><%= blogPosts[i].comments[j].body %></strong><hr><br>
-        <% } %>
     <% } %>
-    <div>
     <hr><br>
 </div>
 </body>

@@ -38,16 +38,16 @@ let PostSchema = mongoose.Schema({
   }]
 })
 
-PostSchema.pre('remove', function(callback){
-  nodeify(async () => {
-    console.log('Pre-remove'+ mongoose.model('User'))
-    console.log('ID: ' + this._id)
-    await mongoose.model('User').update(
-      {_id: {$in: this.creator}},
-      {$pull: {posts: this._id}},
-      {multi: true}
-    ).exec()
-  }(), callback)
-})
+// PostSchema.pre('remove', function(callback){
+//   nodeify(async () => {
+//     console.log('Pre-remove'+ mongoose.model('User'))
+//     console.log('ID: ' + this._id)
+//     await mongoose.model('User').update(
+//       {_id: {$in: this.creator}},
+//       {$pull: {posts: this._id}},
+//       {multi: true}
+//     ).exec()
+//   }(), callback)
+// })
 
 module.exports = mongoose.model('Post', PostSchema)

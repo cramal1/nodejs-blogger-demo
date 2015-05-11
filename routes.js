@@ -2,7 +2,7 @@ let multiparty = require('multiparty')
 let then = require('express-then')
 let fs = require('fs')
 let DataUri = require('datauri')
-//let nodeify = require('bluebird-nodeify')
+let nodeify = require('bluebird-nodeify')
 
 let Post = require('./models/post')
 let User = require('./models/user')
@@ -83,6 +83,8 @@ module.exports = (app) => {
       if(!post) res.send('404', 'Not Found')
       post.title = title
       post.content = content
+      post.image.data = await fs.promise.readFile(file.path)
+      post.image.contentType = file.headers['content-type']      
       post.updated = Date.now()
       await post.save()
       res.redirect('/blog/'+userId)
@@ -110,13 +112,19 @@ module.exports = (app) => {
   app.get('/profile', isLoggedIn, then(async (req, res) => {
 
     let posts = await Post.promise.find({userid: req.user._id.toString()})
-    // populate the user data to be populated in the profile page
-    posts = await Post.promise.populate(posts, {
-      path: 'creator',
-      match: { _id: req.user._id},
+
+    nodeify(async () => {
+      await posts.populate()
+      // .exec((err, result) => {
+      //   if (err) console.log(err)
+      //   console.log('result', result)
+      // })
+    }(), (err, result) => {
+      if(err) console.log(err)
+      console.log('Result: ' + result)
+      console.log('posts: ' + posts)
     })
-    console.log('id: ' + req.user._id)
-    console.log('posts: ' + posts)
+    // populate the user data to be populated in the profile page
 
     res.render('profile.ejs', {
       user: req.user,
@@ -137,13 +145,13 @@ module.exports = (app) => {
       res.render('login.ejs', {message: 'Please login to proceed'})
       return
     }
-    let posts = await Post.promise.find()
+    let posts = await Post.promise.find({userid: blogId})
     console.log(blogId)
     // populate the user data to be populated in the profile page
-    posts = await Post.promise.populate(posts, {
-      path: 'creator',
-      match: { _id: blogId},
-    })
+    // posts = await Post.promise.populate(posts, {
+    //   path: 'creator',
+    //   match: { _id: blogId},
+    // })
     console.log('Posts: ' + posts)
     let blogPosts = []
     for (let i = 0; i < posts.length; i++) {

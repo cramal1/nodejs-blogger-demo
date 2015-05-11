@@ -27,10 +27,14 @@ module.exports = (app) => {
         username: {$regex: regExp}
       })
     }
-    let dbUserName = user.username
-    if(username.indexOf('@')){
-      dbUserName = user.email
+    let dbUserName
+    if(user){
+      dbUserName = user.username
+      if(username.indexOf('@')){
+        dbUserName = user.email
+      }
     }
+
     if (!user || username !== dbUserName) {
       return [false, {message: 'Invalid username'}]
     }

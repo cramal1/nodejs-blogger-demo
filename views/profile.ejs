@@ -49,9 +49,9 @@
                 <p>
                     <strong>Created By</strong>: <%= user.username %><br>
                     <strong>Last Updated Date</strong>: <%= posts[i].updated %><br><br>
-                    <a href="/post/<%=posts[i]._id%>" class="btn btn-default btn-sm">Edit Post</a> 
+                    <a href="/post/<%=posts[i]._id%>" class="btn btn-primary btn-sm">Edit Post</a> 
                     <form action="/delete/<%=posts[i]._id%>"" method="post" enctype="multipart/form-data">
-                        <button type="submit" class="btn btn-warning btn-lg" style="{ padding-left:20px;}">Delete Post</button>
+                        <button type="submit" class="btn btn-danger btn-sm" style="{ padding-left:20px;}">Delete Post</button>
                     </form>
                 </p>
             </div>
