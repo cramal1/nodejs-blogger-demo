@@ -1,7 +1,6 @@
 let mongoose = require('mongoose')
 let nodeify = require('bluebird-nodeify')
 require('songbird')
-let User = require('./user')
 
 let PostSchema = mongoose.Schema({
   userid: {
@@ -31,7 +30,12 @@ let PostSchema = mongoose.Schema({
   creator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  comments: [{
+    body: String,
+    created: Date,
+    creator: String
+  }]
 })
 
 PostSchema.pre('remove', function(callback){
@@ -42,7 +46,7 @@ PostSchema.pre('remove', function(callback){
       {_id: {$in: this.creator}},
       {$pull: {posts: this._id}},
       {multi: true}
-    )
+    ).exec()
   }(), callback)
 })
 

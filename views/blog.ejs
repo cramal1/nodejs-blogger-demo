@@ -4,7 +4,7 @@
     <title>Blogger</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="http://demo.themexpose.com/style.css">
+    <!-- <link rel="stylesheet" href="http://demo.themexpose.com/style.css"> -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
     <style>
         body         { padding-top:80px; word-wrap:break-word; }
@@ -29,26 +29,38 @@
             <div class="well">
                 <h3><span class="fa fa-laptop"></span> <strong>Post Title</strong>: <%= blogPosts[i].title %></h3><br>
                 <p>
-                    <strong>Last Updated Date</strong>: <%= blogPosts[i].updated %><br><br>
-                    <div class="form-group">
+                    <div>
+                        <strong>Content</strong>: <%= blogPosts[i].content %><br><br>
+                        <strong>Last Updated Date</strong>: <%= blogPosts[i].updated %><br><br>
+                    <div>
+                    <div class="form-group" style="padding-left: 100px;">
                         <label>Image</label>
                             <% if (blogPosts[i].image) { %>
                                 <img src="<%= blogPosts[i].image%>" style="height: 200px; width: 200px"/>
                             <% } %>
-
                     </div>
                     <br>
                     <form action="/comment/<%= blogPosts[i].id %>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Comment</label>
-                            <input type="text" class="form-control" name="comment" value="">
+                            <input type="text" class="form-control" name="commentparam" value=""><br>
+                            <input type="hidden" class="form-control" name="blogId" value="<%= blogPosts[i].blogId%>">
+                            <button type="submit" class="btn btn-warning btn-lg">Post Comment</button>
                         </div>
                     </form>
                 </p>
             </div>
         </div>
-        <hr>
+        <br><br>
+        <div style="background-color: #FFFFEB;">
+        <label>Comments(<%= blogPosts[i].comments.length %>):</label><br>
+        <% for(var j=0; j < blogPosts[i].comments.length; j++) { %>
+                <strong><%= blogPosts[i].comments[j].creator %> commented on</strong>: <%= blogPosts[i].comments[j].created %><br>
+                <strong><%= blogPosts[i].comments[j].body %></strong><hr><br>
+        <% } %>
     <% } %>
+    <div>
+    <hr><br>
 </div>
 </body>
 </html>
