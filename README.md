@@ -32,4 +32,4 @@ Time spent: 14 Hrs
 
 ### Walkthrough
 
-![Demo](...)
+![Demo](https://github.com/cramal1/nodejs-blogger-demo/blob/master/Blogger-Demo_v4.gif)
