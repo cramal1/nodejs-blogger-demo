@@ -4,6 +4,8 @@
     <title>Blogger</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://demo.themexpose.com/style.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
     <style>
         body         { padding-top:80px; word-wrap:break-word; }
     </style>
@@ -38,6 +40,24 @@
         </div>
 
     </div>
+
+    <hr>
+    <% for(var i=0; i < posts.length; i++) { %>
+        <div class="row">
+            <div class="well">
+                <h3><span class="fa fa-laptop"></span> <strong>Post Title</strong>: <%= posts[i].title %></h3><br>
+                <p>
+                    <strong>Created By</strong>: <%= user.username %><br>
+                    <strong>Last Updated Date</strong>: <%= posts[i].updated %><br><br>
+                    <a href="/post/<%=posts[i]._id%>" class="btn btn-default btn-sm">Edit Post</a> 
+                    <form action="/delete/<%=posts[i]._id%>"" method="post" enctype="multipart/form-data">
+                        <button type="submit" class="btn btn-warning btn-lg" style="{ padding-left:20px;}">Delete Post</button>
+                    </form>
+                </p>
+            </div>
+        </div>
+        <hr>
+    <% } %>
 </div>
 </body>
 </html>

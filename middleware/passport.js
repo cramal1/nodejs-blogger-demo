@@ -15,13 +15,18 @@ module.exports = (app) => {
     if(username.indexOf('@')){
       let email = username.toLowerCase()
       user = await User.promise.findOne({email})
+      await User.populate(user, 'posts.title', (err, result) => {
+       if(err) console.log(err)
+       console.log(result)
+      })
+
+      console.log('User after population: ' + user)
     } else {
       let regExp = new RegExp(username, '1')
       user = await User.promise.findOne({
         username: {$regex: regExp}
       })
     }
-    console.log(username, password, user)
     let dbUserName = user.username
     if(username.indexOf('@')){
       dbUserName = user.email

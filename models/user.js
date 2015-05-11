@@ -19,7 +19,11 @@ let userSchema = mongoose.Schema({
     required: true
   },
   blogTitle: String,
-  blogDescription: String
+  blogDescription: String,
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post'
+  }]
 })
 
 userSchema.methods.generateHash = async function(password) {
